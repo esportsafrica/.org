@@ -7,12 +7,22 @@ import {Suspense} from 'react'
 function Form(){
   const router = useRouter()
   const q = useSearchParams()
+  const deniedEmail = q.get('email')
   const [method, setMethod] = useState('magic') // 'magic' | 'password'
-  const [err, setErr] = useState(q.get('denied') ? 'This account is not an admin.' : '')
+  const [err, setErr] = useState(q.get('denied') ? `Account ${deniedEmail ? `(${deniedEmail}) ` : ''}is not an admin.` : '')
   const [info, setInfo] = useState('')
   const [busy, setBusy] = useState(false)
 
   const cb = `${typeof window !== 'undefined' ? window.location.origin : ''}/auth/callback?next=/admin`
+
+  async function handleSignOut(){
+    setBusy(true)
+    await supabaseBrowser().auth.signOut()
+    setBusy(false)
+    setErr('')
+    setInfo('Signed out. Please sign in with your admin account (info@esportsafrica.org).')
+    router.replace('/admin/login')
+  }
 
   async function signInWithGoogle(){
     setBusy(true)
@@ -48,7 +58,7 @@ function Form(){
           options: {emailRedirectTo: cb}
         })
         if(error) throw error
-        setInfo(`Admin magic link sent to ${email}. Click the link in your email to sign in to the Admin Panel.`)
+        setInfo(`Admin magic link sent to ${email}. Click the link in your email to open the Admin Panel directly.`)
       } else {
         const {error} = await sb.auth.signInWithPassword({email, password})
         if(error) throw error
@@ -64,8 +74,28 @@ function Form(){
 
   return (
     <div className="panel w-full max-w-sm space-y-4">
-      <h1 className="text-4xl">Admin <span className="text-accent">Login</span></h1>
-      <p className="text-xs text-neutral-400">Authorized personnel only (e.g. info@esportsafrica.org).</p>
+      <div>
+        <h1 className="text-4xl">Admin <span className="text-accent">Login</span></h1>
+        <p className="mt-1 text-xs text-neutral-400">
+          Authorized personnel only (<b>info@esportsafrica.org</b>).
+        </p>
+      </div>
+
+      {q.get('denied') && (
+        <div className="rounded-sm border border-live/60 bg-live/10 p-3 text-xs leading-relaxed text-live">
+          <p className="font-bold">Access Denied</p>
+          <p className="mt-0.5">
+            Your current logged-in account {deniedEmail && <b className="text-white">({deniedEmail})</b>} does not have admin permissions.
+          </p>
+          <button
+            type="button"
+            onClick={handleSignOut}
+            className="mt-2 inline-block rounded-xs bg-live px-2.5 py-1 text-[11px] font-bold text-white hover:bg-red-600"
+          >
+            Sign out of this account
+          </button>
+        </div>
+      )}
 
       {/* Google Sign In */}
       <button
@@ -119,7 +149,7 @@ function Form(){
           </div>
         )}
 
-        {err && <p role="alert" className="text-sm text-live">{err}</p>}
+        {err && !q.get('denied') && <p role="alert" className="text-sm text-live">{err}</p>}
         {info && <p role="status" className="rounded-sm border border-win bg-win/10 p-2 text-xs text-win">{info}</p>}
 
         <button className="btn w-full" disabled={busy}>
