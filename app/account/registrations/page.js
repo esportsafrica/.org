@@ -45,7 +45,7 @@ export default async function Regs({searchParams}){
   return (
     <>
       <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
-        <h1 className="text-5xl font-extrabold">My Registrations</h1>
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold">My Registrations</h1>
         {searchParams?.joined && (
           <span className="badge badge-open">Joined Team Successfully ✓</span>
         )}

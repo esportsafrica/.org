@@ -47,15 +47,15 @@ export default async function Detail({params}){
   const userPost = user ? lftPosts.find(x => x.user_id === user.id) : null
 
   return (
-    <div className="wrap py-10">
-      <Reveal className="mb-8 grid gap-8 md:grid-cols-[minmax(0,340px)_1fr]">
-        <div className="relative aspect-[4/5] border border-line bg-[#151515]">
+    <div className="wrap py-6 sm:py-10">
+      <Reveal className="mb-8 grid gap-6 sm:gap-8 md:grid-cols-[minmax(0,340px)_1fr]">
+        <div className="relative aspect-[4/5] w-full max-w-[340px] mx-auto md:mx-0 border border-line bg-[#151515]">
           {t.poster_url && <Image src={t.poster_url} alt={`${t.name} poster`} fill sizes="340px" priority className="object-cover"/>}
         </div>
         <div>
           <div className="tag">{t.game} · {t.mode} · {t.entry_type||'solo'}</div>
-          <h1 className="my-3 text-[clamp(44px,8vw,88px)] font-extrabold">{t.name}</h1>
-          {t.description && <p className="mb-5 max-w-xl text-neutral-400">{t.description}</p>}
+          <h1 className="my-3 text-[clamp(34px,7.5vw,80px)] font-extrabold break-words">{t.name}</h1>
+          {t.description && <p className="mb-5 max-w-xl text-neutral-400 text-sm sm:text-base">{t.description}</p>}
           
           {[
             ['Date', fmtDate(t.starts_at)],
@@ -73,13 +73,13 @@ export default async function Detail({params}){
             Times are East Africa Time (EAT).<LocalTime iso={t.starts_at}/>
           </p>
 
-          <div className="mt-6 flex flex-wrap gap-3">
+          <div className="mt-6 flex flex-col sm:flex-row gap-3">
             <RegisterModal
               t={t}
               userId={user?.id}
               defaults={{gamertag:p?.gamertag, discord:p?.discord, country:p?.country, email:user?.email}}
             />
-            <Link href="/tickets" className="btn btn-ghost">Spectator tickets</Link>
+            <Link href="/tickets" className="btn btn-ghost text-center">Spectator tickets</Link>
           </div>
         </div>
       </Reveal>

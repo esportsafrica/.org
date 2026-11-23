@@ -128,8 +128,8 @@ export default function RegisterModal({t,userId,defaults={}}){
     <button className="btn" disabled={closed} onClick={()=>{setOpen(true);setDoneData(null)}}>
       {closed?'Registration closed':`Register · ${kes(t.entry_fee_kes)}`}
     </button>
-    {open&&<div className="fixed inset-0 z-30 grid place-items-center bg-black/70 p-4" onClick={()=>setOpen(false)}>
-      <div ref={ref} role="dialog" aria-modal="true" aria-labelledby="reg-title" className="modal-in max-h-[90vh] w-full max-w-lg overflow-y-auto border border-line bg-surface p-6" onClick={e=>e.stopPropagation()}>
+    {open&&<div className="fixed inset-0 z-40 grid place-items-center bg-black/80 backdrop-blur-xs p-3 sm:p-4 overflow-y-auto" onClick={()=>setOpen(false)}>
+      <div ref={ref} role="dialog" aria-modal="true" aria-labelledby="reg-title" className="modal-in max-h-[92vh] w-full max-w-lg overflow-y-auto border border-line bg-surface p-4 sm:p-6 my-auto" onClick={e=>e.stopPropagation()}>
         <div className="mb-4 flex items-start justify-between">
           <h3 id="reg-title" className="text-3xl">{doneData?'Registration Received':'Register'}</h3>
           <button aria-label="Close" onClick={()=>setOpen(false)} className="text-2xl leading-none text-muted">×</button>

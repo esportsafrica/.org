@@ -19,7 +19,7 @@ export default async function Regs({searchParams}){
 
   return <>
     <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
-      <h1 className="text-5xl font-extrabold">Registrations</h1>
+      <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold">Registrations</h1>
       <a href="/api/admin/registrations-csv" className="btn btn-ghost">Export CSV</a>
     </div>
 

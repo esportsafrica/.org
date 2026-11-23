@@ -97,14 +97,14 @@ export default function TeamRosterManager({reg,isCaptain,currentUserId}){
           <p className="text-xs font-bold uppercase tracking-wider text-accent">Invite Teammate</p>
           
           {canAddMore ? (
-            <form action={createTeamInvite} className="flex flex-wrap gap-2">
+            <form action={createTeamInvite} className="flex flex-col sm:flex-row gap-2">
               <input type="hidden" name="registration_id" value={reg.id}/>
               
               <select
                 name="role"
                 value={role}
                 onChange={e=>setRole(e.target.value)}
-                className="input max-w-[130px] text-xs"
+                className="input sm:max-w-[130px] text-xs"
               >
                 <option value="starter">Starter</option>
                 <option value="sub">Substitute</option>
@@ -114,10 +114,10 @@ export default function TeamRosterManager({reg,isCaptain,currentUserId}){
                 type="email"
                 name="email"
                 placeholder="Teammate email (or leave blank for link)"
-                className="input min-w-[200px] flex-1 text-xs"
+                className="input flex-1 text-xs"
               />
 
-              <button type="submit" className="btn btn-sm">
+              <button type="submit" className="btn btn-sm shrink-0">
                 Generate Invite
               </button>
             </form>
