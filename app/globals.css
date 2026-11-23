@@ -1,0 +1,32 @@
+@tailwind base;@tailwind components;@tailwind utilities;
+:root{--ease-out:cubic-bezier(.23,1,.32,1)}
+html{color-scheme:dark}
+body{@apply bg-bg font-sans text-white antialiased}
+h1,h2,h3{@apply font-display uppercase leading-[.95]}
+@layer components{
+ .wrap{@apply mx-auto max-w-6xl px-5}
+ /* Emil: specific properties, 160ms, strong ease-out, scale(.97) on press */
+ .btn{@apply inline-flex items-center justify-center gap-2 rounded-sm border border-accent bg-accent px-6 py-3 font-display text-base font-bold uppercase tracking-widest text-black transition-[transform,background-color,color,border-color] duration-[160ms] ease-out active:scale-[.97] hover:bg-transparent hover:text-accent}
+ .btn-ghost{@apply border-neutral-600 bg-transparent text-white hover:border-white hover:text-white}
+ .tag{@apply flex items-center gap-2 text-xs font-semibold uppercase tracking-[.14em] text-accent}
+ .row{@apply flex justify-between border-t border-dashed border-line py-1.5 text-sm text-muted [&>b]:font-semibold [&>b]:text-white}
+ .badge{@apply inline-block rounded-sm border border-line px-2 py-0.5 font-display text-xs font-bold uppercase tracking-widest text-neutral-300}
+ .badge-live{@apply border-live bg-live text-white}.badge-open{@apply border-win text-win}.badge-up{@apply border-accent text-accent}
+ .section{@apply border-b border-line py-14}
+}
+/* animation-on-scroll skill: paused until IntersectionObserver adds .animate */
+@keyframes animationIn{0%{opacity:0;transform:translateY(30px);filter:blur(8px)}100%{opacity:1;transform:none;filter:blur(0)}}
+@keyframes fadeIn{from{opacity:0}}
+.aos{animation:animationIn .8s var(--ease-out) var(--d,.1s) both;animation-play-state:paused}
+.aos.animate{animation-play-state:running}
+@media (prefers-reduced-motion:reduce){.aos{animation:fadeIn .2s both}.animate-pulse,.animate-shim{animation:none}}
+@layer components{
+ .input{@apply w-full rounded-sm border border-line bg-bg px-3 py-2.5 text-sm outline-none transition-colors duration-150 ease-out focus:border-accent}
+ .lbl{@apply mb-1 block text-xs font-semibold uppercase tracking-widest text-muted}
+ .panel{@apply border border-line bg-surface p-5}
+ .tbl{@apply w-full min-w-[640px] text-left text-sm [&_th]:border-b [&_th]:border-line [&_th]:px-3 [&_th]:py-2.5 [&_th]:font-display [&_th]:text-[13px] [&_th]:uppercase [&_th]:tracking-widest [&_th]:text-muted [&_td]:border-b [&_td]:border-line [&_td]:px-3 [&_td]:py-2.5}
+ .btn-sm{@apply px-3 py-1.5 text-sm}
+}
+@keyframes modalIn{from{opacity:0;transform:scale(.96)}}
+.modal-in{animation:modalIn .2s var(--ease-out) both}
+@media (prefers-reduced-motion:reduce){.modal-in{animation:fadeIn .15s both}}
