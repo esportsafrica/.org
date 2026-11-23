@@ -3,9 +3,9 @@
 ## 1. Supabase (one time)
 1. Create a project at supabase.com.
 2. SQL editor → run, in order: `supabase/schema.sql`, `supabase/seed.sql`, `supabase/002_accounts.sql`, `supabase/003_hardening.sql`, `supabase/004_teams_and_rosters.sql`.
-3. Auth → Providers: keep Email on. Auth → URL configuration: set Site URL to your site and add `https://YOUR-SITE/auth/callback` (and `http://localhost:3000/auth/callback`) to Redirect URLs. Sign up on the site with your admin email.
+3. Auth → Providers: keep Email on. Auth → URL configuration: set Site URL to your site and add `https://YOUR-SITE/auth/callback` (and `http://localhost:3000/auth/callback`) to Redirect URLs. Sign up on the site with your admin email (`info@esportsafrica.org`).
 4. Make that user admin (SQL editor):
-   `update public.profiles set role='admin' where id=(select id from auth.users where email='YOU@example.com');`
+   `update public.profiles set role='admin' where id=(select id from auth.users where email='info@esportsafrica.org');`
 5. Project settings → API: copy the URL, anon key and service_role key.
 
 ## 2. Run

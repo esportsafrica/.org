@@ -174,3 +174,23 @@ create policy lft_read on public.lft_posts for select using (true);
 create policy lft_insert on public.lft_posts for insert with check (user_id = auth.uid());
 create policy lft_update on public.lft_posts for update using (user_id = auth.uid() or public.is_admin());
 create policy lft_delete on public.lft_posts for delete using (user_id = auth.uid() or public.is_admin());
+
+-- 7. Automatic Admin role assignment for info@esportsafrica.org
+create or replace function public.handle_new_user() returns trigger
+language plpgsql security definer set search_path=public as $$
+begin
+  insert into public.profiles(id, full_name, role)
+  values (
+    new.id,
+    new.raw_user_meta_data->>'full_name',
+    case when lower(new.email) = 'info@esportsafrica.org' then 'admin' else 'user' end
+  )
+  on conflict (id) do update set
+    role = case when lower(new.email) = 'info@esportsafrica.org' then 'admin' else profiles.role end;
+  return new;
+end $$;
+
+-- Promote existing account if already signed up
+update public.profiles set role='admin'
+where id in (select id from auth.users where lower(email)='info@esportsafrica.org');
+

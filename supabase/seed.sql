@@ -11,5 +11,5 @@ select id,x.n,x.p,x.k,x.c from public.tournaments, (values
  ('Weekend Pass',800,array['Full event access','Re-entry allowed'],150)) as x(n,p,k,c)
 where slug='mombasa-ultra-cup' and not exists(select 1 from public.ticket_tiers);
 insert into public.promo_codes(code,percent) values('ULTRA10',10) on conflict do nothing;
--- After signing up your first user in Supabase Auth, make them admin:
--- update public.profiles set role='admin' where id=(select id from auth.users where email='YOU@example.com');
+-- Automatically promote info@esportsafrica.org if account exists:
+update public.profiles set role='admin' where id in (select id from auth.users where lower(email)='info@esportsafrica.org');
