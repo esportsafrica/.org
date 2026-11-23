@@ -1,7 +1,7 @@
 @tailwind base;@tailwind components;@tailwind utilities;
 :root{--ease-out:cubic-bezier(.23,1,.32,1)}
 html{color-scheme:dark;-webkit-text-size-adjust:100%;scroll-behavior:smooth}
-body{@apply bg-bg font-sans text-white antialiased overflow-x-hidden selection:bg-accent selection:text-black}
+body{@apply bg-bg font-sans text-white antialiased overflow-x-hidden selection:bg-accent selection:text-black; -webkit-tap-highlight-color:transparent}
 h1,h2,h3{@apply font-display uppercase leading-[.95] tracking-tight break-words}
 
 @layer utilities{
@@ -9,10 +9,17 @@ h1,h2,h3{@apply font-display uppercase leading-[.95] tracking-tight break-words}
   .no-scrollbar::-webkit-scrollbar{display:none}
   .no-scrollbar{-ms-overflow-style:none;scrollbar-width:none}
   .touch-scroll{-webkit-overflow-scrolling:touch}
+
+  /* iOS Safe Area Insets (iPhone notch, Dynamic Island, Home indicator bar) */
+  .pt-safe{padding-top:max(0px,env(safe-area-inset-top))}
+  .pb-safe{padding-bottom:max(0px,env(safe-area-inset-bottom))}
+  .pl-safe{padding-left:max(0px,env(safe-area-inset-left))}
+  .pr-safe{padding-right:max(0px,env(safe-area-inset-right))}
+  .bottom-safe{bottom:max(1rem,calc(1rem + env(safe-area-inset-bottom)))}
 }
 
 @layer components{
-  .wrap{@apply mx-auto max-w-6xl px-4 sm:px-6 lg:px-8}
+  .wrap{@apply mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 pl-safe pr-safe}
   /* Emil: specific properties, 160ms, strong ease-out, scale(.97) on press */
   .btn{@apply inline-flex min-h-[44px] items-center justify-center gap-2 rounded-sm border border-accent bg-accent px-5 sm:px-6 py-2.5 sm:py-3 font-display text-sm sm:text-base font-bold uppercase tracking-widest text-black transition-[transform,background-color,color,border-color] duration-[160ms] ease-out active:scale-[.97] hover:bg-transparent hover:text-accent touch-manipulation select-none}
   .btn-ghost{@apply border-neutral-600 bg-transparent text-white hover:border-white hover:text-white}
@@ -21,11 +28,12 @@ h1,h2,h3{@apply font-display uppercase leading-[.95] tracking-tight break-words}
   .badge{@apply inline-block rounded-sm border border-line px-2 py-0.5 font-display text-xs font-bold uppercase tracking-widest text-neutral-300}
   .badge-live{@apply border-live bg-live text-white}.badge-open{@apply border-win text-win}.badge-up{@apply border-accent text-accent}
   .section{@apply border-b border-line py-10 sm:py-14}
-  .input{@apply w-full min-h-[42px] rounded-sm border border-line bg-bg px-3 py-2 text-sm outline-none transition-colors duration-150 ease-out focus:border-accent}
+  /* 16px font-size prevents iOS Safari from automatically zooming into the field on focus */
+  .input{@apply w-full min-h-[44px] rounded-sm border border-line bg-bg px-3 py-2 text-[16px] sm:text-sm outline-none transition-colors duration-150 ease-out focus:border-accent}
   .lbl{@apply mb-1 block text-xs font-semibold uppercase tracking-widest text-muted}
   .panel{@apply border border-line bg-surface p-4 sm:p-6}
   .tbl{@apply w-full min-w-[580px] text-left text-sm [&_th]:border-b [&_th]:border-line [&_th]:px-3 [&_th]:py-2.5 [&_th]:font-display [&_th]:text-[13px] [&_th]:uppercase [&_th]:tracking-widest [&_th]:text-muted [&_td]:border-b [&_td]:border-line [&_td]:px-3 [&_td]:py-2.5}
-  .btn-sm{@apply min-h-[34px] px-3 py-1 text-xs sm:text-sm}
+  .btn-sm{@apply min-h-[36px] px-3 py-1 text-xs sm:text-sm}
 }
 @keyframes modalIn{from{opacity:0;transform:scale(.96)}}
 .modal-in{animation:modalIn .2s var(--ease-out) both}

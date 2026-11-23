@@ -7,9 +7,46 @@ import CookieNotice from '@/components/CookieNotice'
 import {supabaseServer} from '@/lib/supabase/server'
 const display=Barlow_Condensed({subsets:['latin'],weight:['600','700','800'],variable:'--font-display'})
 const body=Inter({subsets:['latin'],variable:'--font-body'})
-const site=process.env.NEXT_PUBLIC_SITE_URL||'http://localhost:3000'
-export const metadata={metadataBase:new URL(site),title:{default:'Esports Africa',template:'%s'},description:'Competitive gaming tournaments across Africa. Register, follow live brackets and get tickets.',
-  openGraph:{title:'Esports Africa',description:'Competitive gaming tournaments across Africa.',url:site,siteName:'Esports Africa',images:['/poster.jpg'],type:'website'},twitter:{card:'summary_large_image'}}
+const site=process.env.NEXT_PUBLIC_SITE_URL||'https://esportsafrica.org'
+
+export const viewport = {
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#000000' },
+    { media: '(prefers-color-scheme: dark)', color: '#000000' }
+  ],
+  width: 'device-width',
+  initialScale: 1,
+  viewportFit: 'cover'
+}
+
+export const metadata={
+  metadataBase:new URL(site),
+  title:{default:'Esports Africa',template:'%s · Esports Africa'},
+  description:'Competitive gaming tournaments across Africa. Register, follow live brackets and get tickets.',
+  icons:{
+    icon:'/icon.png',
+    apple:'/icon.png'
+  },
+  appleWebApp:{
+    capable:true,
+    statusBarStyle:'black-translucent',
+    title:'Esports Africa'
+  },
+  formatDetection:{
+    telephone:false
+  },
+  openGraph:{
+    title:'Esports Africa',
+    description:'Competitive gaming tournaments across Africa.',
+    url:site,
+    siteName:'Esports Africa',
+    images:['/poster.jpg'],
+    type:'website'
+  },
+  twitter:{
+    card:'summary_large_image'
+  }
+}
 export default async function RootLayout({children}){
   let user=null,role=null
   if(process.env.NEXT_PUBLIC_SUPABASE_URL){const sb=supabaseServer();const {data}=await sb.auth.getUser();user=data.user;if(user){const {data:p}=await sb.from('profiles').select('role').eq('id',user.id).maybeSingle();role=p?.role}}

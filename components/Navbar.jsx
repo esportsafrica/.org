@@ -32,7 +32,7 @@ export default function Navbar({user,role}){
   },[mobileOpen])
 
   return (
-    <nav className="sticky top-0 z-30 border-b border-line bg-black/95 backdrop-blur-md">
+    <nav className="sticky top-0 z-30 border-b border-line bg-black/95 backdrop-blur-md pt-safe">
       <div className="wrap flex h-[64px] items-center justify-between gap-4">
         {/* Brand / Logo */}
         <Link
@@ -111,11 +111,11 @@ export default function Navbar({user,role}){
       {/* Mobile Drawer Overlay */}
       {mobileOpen && (
         <div
-          className="fixed inset-0 top-[64px] z-40 bg-black/80 backdrop-blur-sm md:hidden"
+          className="fixed inset-0 top-[calc(64px+env(safe-area-inset-top,0px))] z-40 bg-black/80 backdrop-blur-sm md:hidden"
           onClick={() => setMobileOpen(false)}
         >
           <div
-            className="flex max-h-[calc(100vh-64px)] flex-col border-b border-line bg-surface px-5 py-6 overflow-y-auto"
+            className="flex max-h-[calc(100vh-64px-env(safe-area-inset-top,0px))] flex-col border-b border-line bg-surface px-5 py-6 pb-[calc(2rem+env(safe-area-inset-bottom,0px))] overflow-y-auto overscroll-contain"
             onClick={e => e.stopPropagation()}
           >
             <div className="flex flex-col space-y-1">
