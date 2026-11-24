@@ -3,6 +3,27 @@
 @tailwind utilities;
 
 :root {
+  --background: 0 0% 4%;
+  --foreground: 0 0% 98%;
+  --card: 0 0% 7%;
+  --card-foreground: 0 0% 98%;
+  --popover: 0 0% 7%;
+  --popover-foreground: 0 0% 98%;
+  --primary: 50 100% 48%;
+  --primary-foreground: 0 0% 4%;
+  --secondary: 0 0% 12%;
+  --secondary-foreground: 0 0% 98%;
+  --muted: 0 0% 15%;
+  --muted-foreground: 0 0% 55%;
+  --accent: 50 100% 48%;
+  --accent-foreground: 0 0% 4%;
+  --destructive: 3 100% 59%;
+  --destructive-foreground: 0 0% 98%;
+  --border: 0 0% 16%;
+  --input: 0 0% 16%;
+  --ring: 50 100% 48%;
+  --radius: 0.125rem;
+
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
   --spring: cubic-bezier(0.34, 1.56, 0.64, 1);
   --spring-damped: cubic-bezier(0.25, 1, 0.5, 1);
@@ -19,7 +40,7 @@ body {
   -webkit-tap-highlight-color: transparent;
 }
 
-/* Apple Design Typography: Optical sizing, inverse leading, size-specific tracking */
+/* Apple Design & UI Typography: Optical sizing, inverse leading, size-specific tracking */
 h1 {
   @apply font-display uppercase break-words;
   letter-spacing: -0.03em;
